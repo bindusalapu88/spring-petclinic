@@ -11,7 +11,7 @@ pipeline {
         stage('scm') {
             steps {
 
-                git url: 'https://github.com/bindusalapu88/spring-petclinic.git', branch: 'main'
+                git url: 'https://github.com/bindusalapu88/spring-petclinic.git', branch: 'jfrog'
             }
         }
         stage ('Artifactory configuration') {
@@ -34,6 +34,7 @@ pipeline {
                         goals: 'clean install',
                         deployerId: "MAVEN_DEPLOYER",
                     )
+                    stash includes: '**/*.jar', name: 'spcjar'
                 }
             }
         }
@@ -44,6 +45,12 @@ pipeline {
                 )
             }
         }
+        stage ('copy to another node') {
+            agent { label 'MASTER' }
+            steps {
+                unstash 'spcjar'
+            }
+        }    
     }
 
 }
