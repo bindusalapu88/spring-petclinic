@@ -20,8 +20,8 @@ pipeline {
                     id: "MAVEN_DEPLOYER",
                     serverId: 'JFROG-OSS',
                     releaseRepo: 'qt-maven-releases',
-                    snapshotRepo: '
-                    qt-maven-snapshots'
+                    snapshotRepo: 'qt-maven-snapshots'
+                    
                 )
             }
         }        
